@@ -22,18 +22,17 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
-app.get("/api/:input", function (req, res) {
-  const input = req.params.input;
+app.get("/api", (_req, res) => {
+  tempDate = new Date();
+  res.json({
+    unix: tempDate.getTime(),
+    utc: tempDate.toUTCString(),
+  });
+});
+app.get("/api/:input", (_req, res) => {
+  const input = _req.params.input;
   // I could create a date object now but I wanted to make the code a bit more symmetrical
   let tempDate;
-  if (input === "") {
-    //set the date to today
-    tempDate = new Date();
-    res.json({
-      unix: tempDate.getTime(),
-      natural: tempDate.toDateString(),
-    });
-  }
   if (new Date(input) != "Invalid Date") {
     tempDate = new Date(input);
     res.json({
